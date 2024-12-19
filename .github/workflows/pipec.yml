@@ -19,14 +19,13 @@ jobs:
     - name: Set up .NET Framework
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore dependencies
-      run: |
-        nuget restore Curs.sln
+    - name: Restore NuGet packages
+      run: nuget restore Curs.sln
 
-    - name: Build solution
+    - name: Build solution with MSBuild
       run: |
         msbuild Curs.sln /p:Configuration=Release
 
     - name: Run Code Analysis (Roslyn Analyzer)
       run: |
-        dotnet build Curs.sln -p:Configuration=Release -warnaserror
+        msbuild Curs.sln /p:Configuration=Release /p:RunCodeAnalysis=true
