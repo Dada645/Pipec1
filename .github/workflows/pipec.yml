@@ -22,11 +22,17 @@ jobs:
           Start-Process -FilePath .\dotnetfx48.exe -ArgumentList '/quiet', '/norestart' -Wait
         shell: pwsh
 
+      - name: Install Visual Studio Build Tools
+        run: |
+          # Установим необходимые Build Tools, если MSBuild не доступен
+          choco install visualstudio2019buildtools --version 16.11.3 --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended --quiet --norestart"
+        shell: pwsh
+
       - name: Restore dependencies
-        run: nuget restore Curs.sln
+        run: nuget restore Pipec1.sln  # Убедитесь, что имя решения правильное
 
       - name: Build project
-        run: msbuild Curs.sln /p:Configuration=Release
+        run: msbuild Pipec1.sln /p:Configuration=Release  # Сборка проекта
 
       - name: Run Roslyn Analyzers (optional)
         run: |
