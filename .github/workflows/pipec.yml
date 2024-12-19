@@ -25,7 +25,7 @@ jobs:
       - name: Установка Visual Studio Build Tools
         run: |
           choco install visualstudio2019buildtools --version 16.11.3 --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended --quiet --norestart"
-          echo "##[add-path]C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
+          echo "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
         shell: pwsh
 
       - name: Восстановление зависимостей
