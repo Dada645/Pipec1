@@ -1,4 +1,4 @@
-name: Сборка и анализ C# проекта
+name: Build and Check Syntax Errors
 
 on:
   push:
@@ -10,36 +10,23 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Используем Windows runner для работы с .NET Framework
 
     steps:
-      - name: Получение кода
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Установка .NET Framework 4.8 SDK
-        run: |
-          Invoke-WebRequest -Uri https://go.microsoft.com/fwlink/?LinkId=2085155 -OutFile dotnetfx48.exe
-          Start-Process -FilePath .\dotnetfx48.exe -ArgumentList '/quiet', '/norestart' -Wait
-        shell: pwsh
+    - name: Set up .NET Framework
+      uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Установка Visual Studio Build Tools
-        run: |
-          choco install visualstudio2019buildtools --version 16.11.3 --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended --quiet --norestart"
-          echo "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
-        shell: pwsh
+    - name: Restore dependencies
+      run: |
+        nuget restore Curs.sln
 
-      - name: Восстановление зависимостей
-        run: nuget restore Curs.sln
+    - name: Build solution
+      run: |
+        msbuild Curs.sln /p:Configuration=Release
 
-      - name: Сборка проекта
-        run: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\msbuild.exe" Curs.sln /p:Configuration=Release'
-
-      - name: Запуск Roslyn Analyzers (опционально)
-        run: |
-          dotnet tool install --global dotnet-analyzer
-          dotnet build Curs.sln
-          dotnet analyze Curs.sln
-
-      - name: Публикация результатов сборки
-        run: |
-          # Опционально: можно опубликовать результаты сборки или анализов
+    - name: Run Code Analysis (Roslyn Analyzer)
+      run: |
+        dotnet build Curs.sln -p:Configuration=Release -warnaserror
