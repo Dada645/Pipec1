@@ -1,4 +1,4 @@
-name: Build and Analyze C# Project
+name: Сборка и анализ C# проекта
 
 on:
   push:
@@ -13,33 +13,33 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Получение кода
         uses: actions/checkout@v2
 
-      - name: Install .NET Framework 4.8 SDK
+      - name: Установка .NET Framework 4.8 SDK
         run: |
           Invoke-WebRequest -Uri https://go.microsoft.com/fwlink/?LinkId=2085155 -OutFile dotnetfx48.exe
           Start-Process -FilePath .\dotnetfx48.exe -ArgumentList '/quiet', '/norestart' -Wait
         shell: pwsh
 
-      - name: Install Visual Studio Build Tools
+      - name: Установка Visual Studio Build Tools
         run: |
-          # Установим необходимые Build Tools, если MSBuild не доступен
           choco install visualstudio2019buildtools --version 16.11.3 --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended --quiet --norestart"
+          $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
         shell: pwsh
 
-      - name: Restore dependencies
-        run: nuget restore Curs.sln  # Убедитесь, что имя решения правильное
+      - name: Восстановление зависимостей
+        run: nuget restore Pipec1.sln  # Убедитесь, что имя решения правильное
 
-      - name: Build project
-        run: msbuild Curs.sln /p:Configuration=Release  # Сборка проекта
+      - name: Сборка проекта
+        run: msbuild Pipec1.sln /p:Configuration=Release  # Сборка проекта
 
-      - name: Run Roslyn Analyzers (optional)
+      - name: Запуск Roslyn Analyzers (опционально)
         run: |
           dotnet tool install --global dotnet-analyzer
-          dotnet build Pipec1.sln
-          dotnet analyze Pipec1.sln
+          dotnet build Curs.sln
+          dotnet analyze Curs.sln
 
-      - name: Publish build results
+      - name: Публикация результатов сборки
         run: |
           # Опционально: можно опубликовать результаты сборки или анализов
