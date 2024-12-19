@@ -19,6 +19,9 @@ jobs:
     - name: Что-то там настройка, что-то там .NET
       uses: microsoft/setup-msbuild@v1.0.2
 
+    - name: Установить кодировку UTF-8
+      run: chcp 65001
+
     - name: Восстанавливаем пакеты NuGet
       run: nuget restore Curs.sln
 
