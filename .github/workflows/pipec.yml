@@ -25,14 +25,14 @@ jobs:
       - name: Установка Visual Studio Build Tools
         run: |
           choco install visualstudio2019buildtools --version 16.11.3 --package-parameters "--add Microsoft.VisualStudio.Workload.ManagedDesktop --includeRecommended --quiet --norestart"
-          $env:PATH += ';C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin'
+          echo "##[add-path]C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
         shell: pwsh
 
       - name: Восстановление зависимостей
-        run: nuget restore Curs.sln  # Убедитесь, что имя решения правильное
+        run: nuget restore Curs.sln
 
       - name: Сборка проекта
-        run: msbuild Curs.sln /p:Configuration=Release  # Сборка проекта
+        run: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\msbuild.exe" Curs.sln /p:Configuration=Release'
 
       - name: Запуск Roslyn Analyzers (опционально)
         run: |
