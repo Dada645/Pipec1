@@ -16,10 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '4.8'
+      - name: Install .NET Framework 4.8
+        run: choco install netfx-4.8-sdk --yes
 
       - name: Restore dependencies
         run: nuget restore Pipec1.sln
@@ -35,4 +33,4 @@ jobs:
 
       - name: Publish build results
         run: |
-          # Можно публиковать результаты сборки и анализов, если необходимо
+          # Опционально: можно опубликовать результаты сборки или анализов
