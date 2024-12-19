@@ -1,4 +1,4 @@
-name: Build and Check Syntax Errors
+name: Ну сколько можно
 
 on:
   push:
@@ -10,22 +10,22 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Используем Windows runner для работы с .NET Framework
+    runs-on: windows-latest
 
     steps:
-    - name: Checkout repository
+    - name: Туда-сюда проверка
       uses: actions/checkout@v2
 
-    - name: Set up .NET Framework
+    - name: Что-то там настройка, что-то там .NET
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore NuGet packages
+    - name: Восстанавливаем пакеты NuGet
       run: nuget restore Curs.sln
 
-    - name: Build solution with MSBuild
+    - name: Билдим проект
       run: |
         msbuild Curs.sln /p:Configuration=Release
 
-    - name: Run Code Analysis (Roslyn Analyzer)
+    - name: Запускаем АНАЛИЗ
       run: |
         msbuild Curs.sln /p:Configuration=Release /p:RunCodeAnalysis=true
