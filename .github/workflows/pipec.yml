@@ -1,0 +1,38 @@
+name: Build and Analyze C# Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '4.8'
+
+      - name: Restore dependencies
+        run: nuget restore Pipec1.sln
+
+      - name: Build project
+        run: msbuild Pipec1.sln /p:Configuration=Release
+
+      - name: Run Roslyn Analyzers (optional)
+        run: |
+          dotnet tool install --global dotnet-analyzer
+          dotnet build Pipec1.sln
+          dotnet analyze Pipec1.sln
+
+      - name: Publish build results
+        run: |
+          # Можно публиковать результаты сборки и анализов, если необходимо
