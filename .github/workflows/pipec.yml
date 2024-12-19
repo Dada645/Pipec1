@@ -29,10 +29,10 @@ jobs:
         shell: pwsh
 
       - name: Restore dependencies
-        run: nuget restore Pipec1.sln  # Убедитесь, что имя решения правильное
+        run: nuget restore Curs.sln  # Убедитесь, что имя решения правильное
 
       - name: Build project
-        run: msbuild Pipec1.sln /p:Configuration=Release  # Сборка проекта
+        run: msbuild Curs.sln /p:Configuration=Release  # Сборка проекта
 
       - name: Run Roslyn Analyzers (optional)
         run: |
