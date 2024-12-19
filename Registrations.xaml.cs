@@ -45,50 +45,36 @@ namespace Curs
 
             if (!validator.ValidatePassword(newPassword))
             {
-                CustomMessageBox.Show("Неверный пароль.");
-                Logger.Log($"Ошибка регистрации: неверный пароль.");
                 return;
             }
 
             if (!validator.ValidateName(FirstNameTextBox.Text))
             {
-                CustomMessageBox.Show("Неверное имя.");
-                Logger.Log($"Ошибка регистрации: неверное имя {FirstNameTextBox.Text}.");
                 return;
             }
 
             if (!validator.ValidateName(LastNameTextBox.Text))
             {
-                CustomMessageBox.Show("Неверная фамилия.");
-                Logger.Log($"Ошибка регистрации: неверная фамилия {LastNameTextBox.Text}.");
                 return;
             }
 
             if (!validator.ValidateDate(DateOfBirthPicker.SelectedDate.Value))
             {
-                CustomMessageBox.Show("Неверная дата рождения.");
-                Logger.Log($"Ошибка регистрации: неверная дата рождения {DateOfBirthPicker.SelectedDate.Value.ToString("yyyy-MM-dd")}.");
                 return;
             }
 
             if (!validator.ValidatePhone(PhoneTextBox.Text))
             {
-                CustomMessageBox.Show("Неверный телефон.");
-                Logger.Log($"Ошибка регистрации: неверный телефон {PhoneTextBox.Text}.");
                 return;
             }
 
             if (!validator.ValidateEmail(EmailTextBox.Text))
             {
-                CustomMessageBox.Show("Неверный адрес электронной почты.");
-                Logger.Log($"Ошибка регистрации: неверный адрес электронной почты {EmailTextBox.Text}.");
                 return;
             }
 
             if (!validator.ValidateAddress(AddressTextBox.Text))
             {
-                CustomMessageBox.Show("Неверный адрес.");
-                Logger.Log($"Ошибка регистрации: неверный адрес {AddressTextBox.Text}.");
                 return;
             }
 
@@ -104,15 +90,12 @@ namespace Curs
 
                 clients.InsertQuery(FirstNameTextBox.Text, LastNameTextBox.Text, DateOfBirthPicker.SelectedDate.Value.ToString("yyyy-MM-dd"), PhoneTextBox.Text,
                                     EmailTextBox.Text, AddressTextBox.Text, accountId);
-                Logger.Log($"Клиент {FirstNameTextBox.Text} {LastNameTextBox.Text} успешно зарегистрирован. Аккаунт ID: {accountId}");
                 MainWindow auth = new MainWindow();
                 auth.Show();
                 this.Close();
             }
             catch (Exception ex)
             {
-                CustomMessageBox.Show($"Ошибка при добавлении клиента: {ex.Message}");
-                Logger.Log($"Ошибка при добавлении клиента: {ex.Message}");
             }
         }
 
