@@ -24,4 +24,4 @@ jobs:
 
     - name: Собираем проект и запускаем АНАЛиз
       run: |
-        msbuild Curs.sln /p:Configuration=Release /p:RunCodeAnalysis=true
+        msbuild Curs.sln /p:RunCodeAnalysis=true
