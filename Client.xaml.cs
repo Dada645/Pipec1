@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Curs
 {
-    /// <summary>
-    /// Логика взаимодействия для Client.xaml
-    /// </summary>
     public partial class Client : Window
     {
         public Client()
@@ -34,19 +31,15 @@ namespace Curs
                 {
                     case "Клиенты":
                         MainFrame.Navigate(new ClientsInfo());
-                        Logger.Log($"Переход на страницу '' Клиенты ''");
                         break;
                     case "Транзакции":
                         MainFrame.Navigate(new Transactions());
-                        Logger.Log($"Переход на страницу '' Транзакции ''");
                         break;
                     case "Претензии":
                         MainFrame.Navigate(new Claims());
-                        Logger.Log($"Переход на страницу '' Претензии ''");
                         break;
                     case "Выплаты":
                         MainFrame.Navigate(new Payouts());
-                        Logger.Log($"Переход на страницу '' Выплаты ''");
                         break;
                 }
             }
@@ -58,7 +51,6 @@ namespace Curs
             auf.Show();
             this.Close();
             AuthenticatedClients.ClearAuthenticatedClientIds();
-            Logger.Log($"Переход на страницу '' Авторизация ''");
 
         }
 
