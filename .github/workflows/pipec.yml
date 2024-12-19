@@ -22,10 +22,6 @@ jobs:
     - name: Восстанавливаем пакеты NuGet
       run: nuget restore Curs.sln
 
-    - name: Билдим проект
-      run: |
-        msbuild Curs.sln /p:Configuration=Release
-
-    - name: Запускаем АНАЛИЗ
+    - name: Собираем проект и запускаем АНАЛиз
       run: |
         msbuild Curs.sln /p:Configuration=Release /p:RunCodeAnalysis=true
