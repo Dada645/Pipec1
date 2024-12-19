@@ -16,14 +16,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install .NET Framework 4.8
-        run: choco install netfx-4.8-sdk --yes
+      - name: Install .NET Framework 4.8 SDK
+        run: |
+          Invoke-WebRequest -Uri https://go.microsoft.com/fwlink/?LinkId=2085155 -OutFile dotnetfx48.exe
+          Start-Process -FilePath .\dotnetfx48.exe -ArgumentList '/quiet', '/norestart' -Wait
+        shell: pwsh
 
       - name: Restore dependencies
-        run: nuget restore Pipec1.sln
+        run: nuget restore Curs.sln
 
       - name: Build project
-        run: msbuild Pipec1.sln /p:Configuration=Release
+        run: msbuild Curs.sln /p:Configuration=Release
 
       - name: Run Roslyn Analyzers (optional)
         run: |
