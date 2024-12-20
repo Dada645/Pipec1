@@ -1,4 +1,4 @@
-name: Code Quality Check with Super-Linter
+name: Ну сколько можно
 
 on:
   push:
@@ -10,16 +10,16 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest  # Super-Linter лучше работает на Ubuntu
+    runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
+    - name: Туда-сюда проверка
       uses: actions/checkout@v2
 
-    - name: Run Super-Linter
+    - name: Супер-супер-супер-супер линетр
       uses: github/super-linter@v5
       env:
-        VALIDATE_ALL_CODEBASE: true  # Проверяет весь код репозитория
-        DEFAULT_BRANCH: main         # Указывает основную ветку
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Для публикации аннотаций
-        VALIDATE_CSHARP: true        # Включает проверку кода на C#
+        VALIDATE_ALL_CODEBASE: true
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VALIDATE_CSHARP: true
