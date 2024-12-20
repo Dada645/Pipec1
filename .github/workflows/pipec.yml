@@ -1,4 +1,4 @@
-name: Ну сколько можно
+name: Code Quality Check with Super-Linter
 
 on:
   push:
@@ -9,22 +9,17 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  lint:
+    runs-on: ubuntu-latest  # Super-Linter лучше работает на Ubuntu
+    
     steps:
-    - name: Туда-сюда проверка
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Что-то там настройка, что-то там .NET
-      uses: microsoft/setup-msbuild@v1.0.2
-
-    - name: Установить кодировку UTF-8
-      run: chcp 65001
-
-    - name: Восстанавливаем пакеты NuGet
-      run: nuget restore Curs.sln
-
-    - name: Собираем проект и запускаем АНАЛиз
-      run: |
-        msbuild Curs.sln /p:RunCodeAnalysis=true
+    - name: Run Super-Linter
+      uses: github/super-linter@v5
+      env:
+        VALIDATE_ALL_CODEBASE: true  # Проверяет весь код репозитория
+        DEFAULT_BRANCH: main         # Указывает основную ветку
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Для публикации аннотаций
+        VALIDATE_CSHARP: true        # Включает проверку кода на C#
