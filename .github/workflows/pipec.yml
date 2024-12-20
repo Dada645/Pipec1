@@ -18,8 +18,3 @@ jobs:
 
     - name: Супер-супер-супер-супер линетр
       uses: github/super-linter@v5
-      env:
-        VALIDATE_ALL_CODEBASE: true
-        DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        VALIDATE_CSHARP: true
